@@ -50,9 +50,7 @@ I mentioned that this plugin is useful even without telescope.
 
 Let me paint you a picture: have you ever got the thought of "oh here's a problem at this place, but I can't handle it right now, I'm going to come back to it later".
 
-Question: how? How are you going to get to it? With a local mark? Maybe, but then if you add or remove lines above, the mark is going to move and become invalid.
-
-Using [`harp-nvim`](https://github.com/Axlefublr/harp-nvim)'s local search harps? That's better, but now you have to come up with a register that you'll remember to check, when in reality the semantic you're trying to go for is "this is one of the places I need to eventually get to now".
+Question: how? How are you going to get to it? With a local mark? Using [`harp-nvim`](https://github.com/Axlefublr/harp-nvim)'s local search harps? Regardless of your choice, now you have to come up with a register that you'll remember to check, when in reality the semantic you're trying to go for is "this is one of the places I need to eventually get to now".
 
 ```lua
 vim.keymap.set('n', "'q", function() require('qfetter').mark() end)
@@ -62,7 +60,7 @@ This mapping will *add* the current cursor position to the qflist (at the end). 
 
 So now, if you see some bug you want to get to later, just add it to the qflist! You will then be able to use the `[q` & `q]` mappings to get to it.
 
-> I do realize that the default mapping of `'q` is nonsensical and ridiculous, but I can't come up with anything better as a default. If you have a suggestion, feel free to share in an issue / pr.
+> I do realize that the suggested mapping of `'q` is nonsensical and ridiculous, but I can't come up with anything better as a default. If you have a suggestion, feel free to share in an issue / pr. Fwiw, this plugin does *not* add any mappings for you, it's completely up to you to make them.
 
 You can add a location to the qflist, so it only makes sense to give you the ability to *remove* a location from the qflist:
 
@@ -88,10 +86,10 @@ As the name implies, it will fully clear the qflist.
 
 ```lua
 {
-	'Axlefublr/qfetter.nvim',
-	lazy = true, -- the mappings lazy-load the plugin, so it doesn't need to run at startup.
-	opts = {
-		notifications = true -- display notifications on the mark(), unmark(), clear() actions.
-	}
+  'Axlefublr/qfetter.nvim',
+  lazy = true, -- the mappings lazy-load the plugin, so it doesn't need to run at startup.
+  opts = {
+    notifications = true -- display notifications on the mark(), unmark(), clear() actions.
+  }
 }
 ```
