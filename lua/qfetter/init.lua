@@ -10,6 +10,9 @@ local default_opts = {
 	notifications = true
 }
 
+--- Move to another entry in the current quickfix list.
+--- If you're on the last entry, rotate to the first one.
+--- If you're not on any qf entry, go to the first one.
 ---@param opts AnotherOpts?
 function M.another(opts)
 	local backwards = opts and opts.backwards or default_opts.backwards
@@ -58,6 +61,7 @@ function M.another(opts)
 	end
 end
 
+--- Add the current position to the quickfix list.
 function M.mark()
 	local buffer = vim.api.nvim_get_current_buf()
 	local cursor = vim.api.nvim_win_get_cursor(0)
@@ -71,15 +75,18 @@ function M.mark()
 	if default_opts.notifications then vim.notify('add qf entry') end
 end
 
+--- Remove the current quickfix entry from the list.
 ---@param index integer? The index of the qflist entry you want to remove. Pass `nil` if you want to delete the *current* qflist entry.
 function M.unmark(index)
-	local selected = index or vim.fn.getqflist({ idx = 0 }).idx
+	local count_if_passed_else_current = vim.v.count > 0 and vim.v.count or vim.fn.getqflist({ idx = 0 }).idx
+	local selected = index or count_if_passed_else_current
 	local qflist = vim.fn.getqflist()
 	table.remove(qflist, selected)
 	vim.fn.setqflist(qflist, 'r')
 	if default_opts.notifications then vim.notify('remove qf ' .. selected) end
 end
 
+--- Clear the quickfix list.
 function M.clear()
 	vim.fn.setqflist({}, 'r')
 	if default_opts.notifications then vim.notify('qflist cleared') end
