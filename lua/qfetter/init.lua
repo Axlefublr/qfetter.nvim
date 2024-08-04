@@ -1,9 +1,9 @@
 local M = {}
 
----@class AnotherOpts
----@field backwards boolean Go to the previous quickfix entry, instead of to the next one.
----@field next_buffer boolean Go to the next quickfix entry *in a different file*, rather than just the next one (that could be in the same file).
----@field notifications boolean Whether to show notifications for mark, unmark, clear functions.
+---@class QfetterOpts
+---@field backwards boolean? Go to the previous quickfix entry, instead of to the next one.
+---@field next_buffer boolean? Go to the next quickfix entry *in a different file*, rather than just the next one (that could be in the same file).
+---@field notifications boolean? Whether to show notifications for mark, unmark, clear functions.
 local default_opts = {
 	backwards = false,
 	next_buffer = false,
@@ -13,7 +13,7 @@ local default_opts = {
 --- Move to another entry in the current quickfix list.
 --- If you're on the last entry, rotate to the first one.
 --- If you're not on any qf entry, go to the first one.
----@param opts AnotherOpts?
+---@param opts QfetterOpts?
 function M.another(opts)
 	local backwards = opts and opts.backwards or default_opts.backwards
 	local next_buffer = opts and opts.next_buffer or default_opts.next_buffer
@@ -92,6 +92,7 @@ function M.clear()
 	if default_opts.notifications then vim.notify('qflist cleared') end
 end
 
+---@param opts QfetterOpts
 function M.setup(opts)
 	default_opts = vim.tbl_extend('force', default_opts, opts)
 end
