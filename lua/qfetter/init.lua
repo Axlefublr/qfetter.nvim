@@ -92,7 +92,7 @@ function M.clear()
 	if default_opts.notifications then vim.notify('qflist cleared') end
 end
 
----@param opts QfetterOpts
+---@param opts QfetterOpts?
 function M.setup(opts)
 	default_opts = vim.tbl_extend('force', default_opts, opts)
 end
